@@ -23,10 +23,7 @@ export const NoteScreen = () => {
                         alt="imagen"
                     >
                     </img>
-
                 </div>
-
-
             </div>
 
 
