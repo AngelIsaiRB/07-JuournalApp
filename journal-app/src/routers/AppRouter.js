@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import{ BrowserRouter as Router,} from 'react-router-dom';
 import {firebase} from "../firebase/firebaseConfig"
 import {Switch,Route,Redirect } from "react-router-dom";
@@ -11,16 +11,25 @@ export const AppRouter = () => {
     
     const dispatch = useDispatch();
 
+    const [checking, setchecking] = useState(true);
+
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user)=>{
 
             if(user?.uid){
-                dispatch(login(user.uid, user.displayName));
+                dispatch(login(user.uid, user.displayName));                
             }
+            setchecking(false);
 
 
         });
-    }, [dispatch]) //solo de ejecuta una vez 
+    }, [dispatch, setchecking]) //solo de ejecuta una vez 
+
+    if(checking){
+        return (
+            <h1> Wait......</h1>
+        )
+    }
 
     return (
         <Router>           
@@ -28,7 +37,9 @@ export const AppRouter = () => {
                 
                 <Switch>
                     <Route path="/auth" component={AuthRouter}/>
+
                     <Route exact  path="/" component={JournalScreen}/>
+
                     <Redirect to="/auth/login"/>
                 </Switch>
                 
