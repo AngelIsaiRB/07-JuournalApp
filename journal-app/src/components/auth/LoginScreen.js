@@ -34,7 +34,7 @@ export const LoginScreen = () => {
                     className="auth__input" 
                     value={email}   
                     onChange={hnaldeinputchange} 
-                    autocomplete="off" 
+                    autoComplete="off" 
                     type="text" 
                     placeholder="Email" 
                     name="email"></input>
