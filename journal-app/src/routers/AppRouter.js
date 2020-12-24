@@ -13,17 +13,23 @@ export const AppRouter = () => {
 
     const [checking, setchecking] = useState(true);
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user)=>{
 
             if(user?.uid){
-                dispatch(login(user.uid, user.displayName));                
+                dispatch(login(user.uid, user.displayName));       
+                setIsLoggedIn(true);         
+            }
+            else{
+                setIsLoggedIn(false);
             }
             setchecking(false);
 
 
         });
-    }, [dispatch, setchecking]) //solo de ejecuta una vez 
+    }, [dispatch, setchecking,setIsLoggedIn]) //solo de ejecuta una vez 
 
     if(checking){
         return (
