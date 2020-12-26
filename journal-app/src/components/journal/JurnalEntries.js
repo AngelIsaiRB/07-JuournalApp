@@ -7,7 +7,7 @@ export const JurnalEntries = () => {
     const {notes} = useSelector(state => state.notes);
 
     return (
-        <div className="journal__entries">
+        <div className="journal__entries ">
             {
                 notes.map(note=>(
                     <JournalEntry 
