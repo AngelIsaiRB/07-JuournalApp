@@ -2,6 +2,7 @@ import { db } from "../firebase/firebaseConfig";
 import { loadNotes } from "../helpers/loadNotes";
 import { types } from "../types/types";
 import Swal from 'sweetalert2'
+// react-journal
 
 export const startNewNote = ()=>{
     return async(dispatch, getState) =>{
@@ -52,9 +53,23 @@ export const StartSaveNote =(note)=>{
         const noteFireStore = {...note};
         delete noteFireStore.id;
 
-        await db.doc(`${uid}/journal/notes/${note.id}`).update(noteFireStore);
-        Swal.fire('Save!',
-        '',
-        'success')
+        try {
+            await db.doc(`${uid}/journal/notes/${note.id}`).update(noteFireStore);
+            dispatch(refreshNote(note.id, noteFireStore));
+            Swal.fire('Save!','','success')            
+        } catch (error) {
+            Swal.fire('Error!',error.data,'error')            
+        }
     }
 }
+
+export const refreshNote =(id,note)=>({
+    type:types.notesUpdate,
+    payload:{
+        id,
+        note:{
+            id,
+            ...note,
+        }
+    }
+})
