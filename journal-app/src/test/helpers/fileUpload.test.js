@@ -1,6 +1,12 @@
-import React from 'react';
-import { shallow, mount } from 'enzyme'
+import cloudinary from 'cloudinary';
 import { fileUpload } from '../../helpers/fileUpload';
+
+cloudinary.config({ 
+    cloud_name: 'angelisai', 
+    api_key: '972115881796678', 
+    api_secret: 'a2Q4WN7oGxyKyWW8EvS5QasoIv4' 
+  });
+
 
 describe('pruebas en fileUpload', () => {
 
@@ -11,6 +17,15 @@ describe('pruebas en fileUpload', () => {
         const  url = await fileUpload(file);
         expect( typeof url).toBe("string");
         expect( url.includes("res.cloudinary.com/angelisai/image") ).toBe(true);
+
+        // borrar imagen por id
+        const segments = url.split("/");
+        const imgI = segments[segments.length -1].replace(".png","");
+        const imgId = `React-journal/${imgI}`
+         const resps = await cloudinary.v2.api.delete_resources(imgId);
+        console.log(resps)
+
+
     });
     test('should  de cargar un archivo y retornar un url', async() => {        
         const file = new File([], "fotoTest.png");   
