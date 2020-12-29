@@ -1,5 +1,3 @@
-import React from 'react';
-import { shallow, mount } from 'enzyme'
 import { finishLoading, removeError, setError, startLoading } from '../../actions/ui';
 import { types } from '../../types/types';
 
