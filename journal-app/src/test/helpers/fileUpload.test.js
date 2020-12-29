@@ -23,7 +23,7 @@ describe('pruebas en fileUpload', () => {
         const imgI = segments[segments.length -1].replace(".png","");
         const imgId = `React-journal/${imgI}`
          const resps = await cloudinary.v2.api.delete_resources(imgId);
-        console.log(resps)
+        
 
 
     });
