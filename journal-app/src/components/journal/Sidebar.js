@@ -11,7 +11,7 @@ export const Sidebar = () => {
 
     const handleLogout =()=>{
 
-       dispatch(starLogout())       
+       dispatch(starLogout());      
     }
 
     const handleAddNew =()=>{
