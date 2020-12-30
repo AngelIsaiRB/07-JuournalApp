@@ -5,7 +5,12 @@ import { shallow, mount } from 'enzyme'
 import { LoginScreen } from '../../../components/auth/LoginScreen';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+import { startGoogleLogin, startLoginEmailPassword } from '../../../actions/auth';
 
+jest.mock('../../../actions/auth',()=>({
+    startGoogleLogin : jest.fn(),
+    startLoginEmailPassword : jest.fn(),
+}))
 
 
 const middlewares = [thunk];
@@ -19,7 +24,7 @@ const initState = {
 
 }
 let store = mockStore(initState);
-
+store.dispatch= jest.fn();
 const wrapper = mount(
     <Provider store={store}>
         <MemoryRouter>
@@ -31,6 +36,7 @@ const wrapper = mount(
 describe('pruebas en <LoginScreen/>', () => {
     beforeEach(() => {
         store = mockStore(initState);
+        jest.clearAllMocks();
     })
     
 
@@ -39,4 +45,17 @@ describe('pruebas en <LoginScreen/>', () => {
 
     });
 
+    test('should de disparar la accion de startGoogleLogin', () => {
+        wrapper.find(".google-btn").prop("onClick")();
+        expect(startGoogleLogin).toHaveBeenCalled();
+    });
+
+    test('should de llamar a login con los valores correspondientes', () => {
+        wrapper.find("form").prop("onSubmit")(
+            {preventDefault(){}}
+        );
+        expect(startLoginEmailPassword).toHaveBeenCalledWith("email@emial.com","password");
+    })
+    
+    
 })
