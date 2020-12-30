@@ -53,7 +53,7 @@ describe('pruebas en <LoginScreen/>', () => {
     test('should de llamar a login con los valores correspondientes', () => {
         wrapper.find("form").prop("onSubmit")(
             {preventDefault(){}}
-        );
+        ); 
         expect(startLoginEmailPassword).toHaveBeenCalledWith("email@emial.com","password");
     })
     
